@@ -182,5 +182,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fc622d0d3aa884d99d737ec900c8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
+  targetTransform: {fileID: 8717026381218050805, guid: ede8b6bc133b8084eb78ba61fa6d0b0a,
+    type: 3}

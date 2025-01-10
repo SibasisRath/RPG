@@ -1,21 +1,46 @@
 using RPG.Combat;
-using RPG.Core;
+using RPG.Resources;
+using RPG.Events;
 using RPG.Movement;
 using UnityEngine;
 
-namespace RPG.Controller
+namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private Mover mover;
-        [SerializeField] private Camera playerCamera;
+        private Camera playerCamera;
         [SerializeField] private Fighter fighter;
         private bool hasHit;
+        private Health health;
+        [SerializeField] private EventService eventService;
 
+        private bool hasControl;
+        private void SetControl(bool control) => hasControl = control; 
+        private void SubscribingToEvents()
+        {
+            eventService.OnCutSceneStarted.AddListener(SetControl);
+            eventService.OnCutSceneEnded.AddListener(SetControl);
+        }
+        private void UnsubscribingToEvents()
+        {
+            eventService.OnCutSceneStarted.RemoveListener(SetControl);
+            eventService.OnCutSceneEnded.RemoveListener(SetControl);
+        }
+
+        private void Start()
+        {
+            hasControl = true;
+            health = GetComponent<Health>();
+            playerCamera = Camera.main;
+            SubscribingToEvents();
+        }
 
         void Update()
         {
-            if(InteractWithCombat()) return ;
+            if (health.IsDead()) return;
+            if (!hasControl) return;
+            if (InteractWithCombat()) return ;
             if(InteractWithMovement()) return;
         }
 
@@ -25,13 +50,14 @@ namespace RPG.Controller
             foreach (RaycastHit hit in hits) 
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (!GetComponent<Fighter>().CanAttack(target))
+                if (target == null) continue;
+                if (!GetComponent<Fighter>().CanAttack(target.gameObject))
                 {
                     continue;
                 }
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
-                    fighter.StartAttackAction(target);
+                    fighter.StartAttackAction(target.gameObject);
                 }
                 return true;
             }
@@ -46,7 +72,7 @@ namespace RPG.Controller
             {
                 if (Input.GetMouseButton(0))
                 {
-                    mover.StartMoveAction(raycastHit.point);
+                    mover.StartMoveAction(raycastHit.point, 1f);
                 }
                 return true;
             }
@@ -54,5 +80,10 @@ namespace RPG.Controller
         }
 
         private Ray GetMouseRay() => playerCamera.ScreenPointToRay(Input.mousePosition);
+
+        private void OnDisable()
+        {
+            UnsubscribingToEvents();
+        }
     }
 }

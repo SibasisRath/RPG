@@ -1,4 +1,4 @@
-using RPG.Controller;
+using RPG.Control;
 using UnityEngine;
 
 public class PlayerStateMachine : GenericStateMachine<PlayerController>
