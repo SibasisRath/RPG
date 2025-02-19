@@ -8,9 +8,9 @@ namespace RPG.Cinematics
     public class CinematicTrigger : MonoBehaviour
     {
         [SerializeField] private EventService eventService;
-        bool alreadyTriggered = false;
         [SerializeField] private PlayableDirector playableDirector;
 
+        private bool alreadyTriggered = false;
         private void OnTriggerEnter(Collider other)
         {
             if (!alreadyTriggered && other.gameObject.tag == "Player")

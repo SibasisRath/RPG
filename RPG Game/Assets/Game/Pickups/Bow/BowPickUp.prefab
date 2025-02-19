@@ -99,6 +99,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: BowPickUp
       objectReference: {fileID: 0}
+    - target: {fileID: 5003438877394367276, guid: d10f0480d86bef24798ba0b5526ec776,
+        type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003438877394367276, guid: d10f0480d86bef24798ba0b5526ec776,
+        type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6744293365137189141, guid: d10f0480d86bef24798ba0b5526ec776,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
