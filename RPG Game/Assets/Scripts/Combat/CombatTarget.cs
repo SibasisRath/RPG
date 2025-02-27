@@ -2,7 +2,7 @@ using RPG.Attributes;
 using RPG.Control;
 using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.PickUp
 {
     [RequireComponent(typeof(Health))]
     public class CombatTarget : MonoBehaviour, IRayCastable

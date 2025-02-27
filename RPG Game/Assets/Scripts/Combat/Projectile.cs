@@ -1,7 +1,8 @@
 using RPG.Attributes;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace RPG.Combat
+namespace RPG.PickUp
 {
     public class Projectile : MonoBehaviour
     {
@@ -16,6 +17,8 @@ namespace RPG.Combat
         [SerializeField] private float maxLifeTime = 10f;
         [SerializeField] private GameObject[] destroyOnHit = null;
         [SerializeField] private float lifeAfterImpact = 2f;
+
+        [SerializeField] private UnityEvent OnHit;
 
         private void Start()
         {
@@ -54,6 +57,7 @@ namespace RPG.Combat
             if (other.GetComponent<Health>() != target) { return; }
             if (target.IsDead()) { return; }
             speed = 0;
+            OnHit.Invoke();
             if (hitEffect != null)
             {
                 Instantiate(hitEffect, GetAimLocation(), transform.rotation);

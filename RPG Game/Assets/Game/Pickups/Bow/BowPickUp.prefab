@@ -19,6 +19,16 @@ PrefabInstance:
       propertyPath: particle
       value: 
       objectReference: {fileID: 3101790031684762999}
+    - target: {fileID: 2850925588887163575, guid: d10f0480d86bef24798ba0b5526ec776,
+        type: 3}
+      propertyPath: pickUpCollider
+      value: 
+      objectReference: {fileID: 4745319091233017023}
+    - target: {fileID: 2850925588887163575, guid: d10f0480d86bef24798ba0b5526ec776,
+        type: 3}
+      propertyPath: pickableEffect
+      value: 
+      objectReference: {fileID: -4889482487565542963}
     - target: {fileID: 3440413860622779108, guid: d10f0480d86bef24798ba0b5526ec776,
         type: 3}
       propertyPath: lengthInSec
@@ -126,7 +136,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1047461817378186369}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4268859538621225704, guid: d10f0480d86bef24798ba0b5526ec776,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4889482487565542963}
   m_SourcePrefab: {fileID: 100100000, guid: d10f0480d86bef24798ba0b5526ec776, type: 3}
 --- !u!198 &3101790031684762999 stripped
 ParticleSystem:
@@ -137,6 +151,31 @@ ParticleSystem:
 --- !u!4 &4400394756430387610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4153545926111979017, guid: d10f0480d86bef24798ba0b5526ec776,
+    type: 3}
+  m_PrefabInstance: {fileID: 339190215005093779}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4578756289943102843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4268859538621225704, guid: d10f0480d86bef24798ba0b5526ec776,
+    type: 3}
+  m_PrefabInstance: {fileID: 339190215005093779}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4889482487565542963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4578756289943102843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d0ee17831eaa341a2194e2c4a241cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: 59964571a171eec4b9095d27695a5a75, type: 2}
+--- !u!135 &4745319091233017023 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 5003438877394367276, guid: d10f0480d86bef24798ba0b5526ec776,
     type: 3}
   m_PrefabInstance: {fileID: 339190215005093779}
   m_PrefabAsset: {fileID: 0}

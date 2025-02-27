@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7285400167024835498}
+  - component: {fileID: 984097904737364840}
   m_Layer: 0
   m_Name: EquippedBow
   m_TagString: Untagged
@@ -32,6 +33,18 @@ Transform:
   - {fileID: 670404973557541101}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
+--- !u!114 &984097904737364840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6968320363576476205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef59138fa6c99a489cd3f7e15148733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &667364354269339367
 PrefabInstance:
   m_ObjectHideFlags: 0

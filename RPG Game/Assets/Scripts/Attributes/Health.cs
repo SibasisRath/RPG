@@ -21,6 +21,8 @@ namespace RPG.Attributes
         public class TakedamageEvent : UnityEvent<float>
         { }
 
+        [SerializeField] private UnityEvent onDie = null;
+
         [SerializeField] private TakedamageEvent damageTextDisplayEvent = null;
 
         // start can be called sometimes after we have restored the save state.
@@ -86,21 +88,24 @@ namespace RPG.Attributes
         public void TakeDamage(GameObject instigator, float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
-            print(healthPoints);
             damageTextDisplayEvent.Invoke(damage);
             if (healthPoints == 0)
             {
+                onDie.Invoke();
                 Death();
                 AwardExperience(instigator);
             }
+        }
 
+        public void AdditionalHealth(float healingAmount)
+        {
+            healthPoints = Mathf.Min(healthPoints + healingAmount, GetMaxHealthPoints());
         }
 
         private void Death()
         {
             if (isDead) return;
             isDead = true;
-            print("in death method.");
             animator.SetTrigger("Die");
             GetComponent<ActionScheduler>().CancelCurrentAction();
         }
@@ -114,5 +119,15 @@ namespace RPG.Attributes
         {
             UnsubscribeToEvent();
         }
+
+        internal float GetFraction()
+        {
+            return healthPoints / GetComponent<BaseStats>().GetStat(Stat.HEALTH);
+        }
+        public float GetPercentage()
+        {
+            return 100 * GetFraction();
+        }
+
     }
 }

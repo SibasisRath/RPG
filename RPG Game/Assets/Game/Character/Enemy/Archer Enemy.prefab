@@ -79,6 +79,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archer Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7681175433711092390, guid: 3759533d3b897ea46b960c1c6d2895f8,
+        type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 689283942894122652}
     - target: {fileID: 9017957615150444196, guid: 3759533d3b897ea46b960c1c6d2895f8,
         type: 3}
       propertyPath: characterType
@@ -89,3 +94,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3759533d3b897ea46b960c1c6d2895f8, type: 3}
+--- !u!82 &689283942894122652 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1136493104532902670, guid: 3759533d3b897ea46b960c1c6d2895f8,
+    type: 3}
+  m_PrefabInstance: {fileID: 456401148254414226}
+  m_PrefabAsset: {fileID: 0}

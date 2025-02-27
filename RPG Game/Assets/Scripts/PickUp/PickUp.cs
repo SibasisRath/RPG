@@ -1,20 +1,21 @@
 using RPG.Control;
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.PickUp
 {
-    public class WeaponPickUp : MonoBehaviour, IRayCastable
+    public class PickUp : MonoBehaviour, IRayCastable
     {
-        [SerializeField] private Weapon weapon = null;
-        [SerializeField] private float weaponRespawnTime = 1f;
-        [SerializeField] private Collider weaponPickUpCollider = null;
+        [SerializeField] private float pickUpRespawnTime = 1f;
+        [SerializeField] private Collider pickUpCollider = null;
+        [SerializeField] private IPickable pickableEffect = null;
 
         public bool HandleRaycast(PlayerController callingController)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Pickup(callingController.GetComponent<Fighter>());
+                Pickup(callingController.gameObject);
             }
             return true;
         }
@@ -23,13 +24,16 @@ namespace RPG.Combat
         {
             if (other.gameObject.tag == "Player")
             {
-                Pickup(other.GetComponent<Fighter>());
+                Pickup(other.gameObject);
             }
         }
-        private void Pickup(Fighter fighter)
+        private void Pickup(GameObject player)
         {
-            fighter.EquipWeapon(weapon);
-            StartCoroutine(HideForSeconds(weaponRespawnTime));
+            if (pickableEffect is IPickable effect)
+            {
+                effect.ApplyEffect(player);
+                StartCoroutine(HideForSeconds(pickUpRespawnTime));
+            }
         }
         private IEnumerator HideForSeconds(float seconds)
         {
@@ -39,7 +43,7 @@ namespace RPG.Combat
         }
         private void ShowPickUp(bool shouldShow)
         {
-            weaponPickUpCollider.enabled = shouldShow;
+            pickUpCollider.enabled = shouldShow;
             foreach (Transform child in transform) 
             {
                 child.gameObject.SetActive(shouldShow);

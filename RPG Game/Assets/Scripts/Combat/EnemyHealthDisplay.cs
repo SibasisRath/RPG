@@ -3,7 +3,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.PickUp
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class EnemyHealthDisplay : MonoBehaviour
