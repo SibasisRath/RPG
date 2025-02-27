@@ -367,6 +367,7 @@ MonoBehaviour:
   meshAgent: {fileID: 4180048163746365231}
   playerAnimator: {fileID: 6589452218718126640}
   maxSpeed: 6
+  maxNavPathLength: 40
 --- !u!95 &6589452218718126640
 Animator:
   serializedVersion: 5
