@@ -1,4 +1,5 @@
 using RPG.Events;
+using RPG.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,12 +17,16 @@ namespace RPG.Stats
         [SerializeField] GameObject levelUpParticleEffect = null;
         [SerializeField] bool shouldUseModifiers = false;
 
-        private int currentLevel = 0;
+        LazyValue<int> currentLevel;
 
+        private void Awake()
+        {
+            currentLevel = new LazyValue<int>(CalculateLevel);
+
+        }
         private void Start()
         {
-            currentLevel = CalculateLevel();
-           
+            currentLevel.ForceInit();
         }
         public void Init(EventService eventService)
         {
@@ -46,12 +51,12 @@ namespace RPG.Stats
             if (eventService == null) { return; }
             eventService.OnGainingExperience.RemoveListener(UpdatingLevel);
         }
-        private void UpdatingLevel()
+        public void UpdatingLevel()
         {
             int newLevel = CalculateLevel();
-            if (newLevel > currentLevel)
+            if (newLevel > currentLevel.value)
             {
-                currentLevel = newLevel;
+                currentLevel.value = newLevel;
                 if (levelUpParticleEffect != null)
                 {
                     LevelUpEffect();
@@ -110,11 +115,11 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
-            if (currentLevel < 1 && progression != null)
+           /* if (currentLevel < 1 && progression != null)
             {
                 currentLevel = CalculateLevel();
-            }
-            return currentLevel;
+            }*/
+            return currentLevel.value;
         }
 
         private int CalculateLevel()

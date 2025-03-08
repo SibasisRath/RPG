@@ -54,22 +54,18 @@ namespace RPG.Saving
             {
                 return new Dictionary<string, object>();
             }
-            using (FileStream stream = File.Open(path, FileMode.Open))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                return (Dictionary<string, object>)formatter.Deserialize(stream);
-            }
+            using FileStream stream = File.Open(path, FileMode.Open);
+            BinaryFormatter formatter = new();
+            return (Dictionary<string, object>)formatter.Deserialize(stream);
         }
 
         private void SaveFile(string saveFile, object state)
         {
             string path = GetPathFromSaveFile(saveFile);
             print("Saving to " + path);
-            using (FileStream stream = File.Open(path, FileMode.Create))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, state);
-            }
+            using FileStream stream = File.Open(path, FileMode.Create);
+            BinaryFormatter formatter = new();
+            formatter.Serialize(stream, state);
         }
 
         public bool SaveFileExists(string saveFileName)

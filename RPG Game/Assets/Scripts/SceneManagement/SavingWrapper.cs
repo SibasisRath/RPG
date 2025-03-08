@@ -35,7 +35,7 @@ namespace RPG.SceneManagement
         {
             if (String.IsNullOrEmpty(newGameName)) return;
             SetCurrentSave(newGameName);
-            StartCoroutine (LoadFastScene(newGameName));
+            StartCoroutine (LoadFastScene());
         }
         public void LoadMenu()
         {
@@ -58,7 +58,7 @@ namespace RPG.SceneManagement
             return PlayerPrefs.GetString(currentSaveKey);
         }
 
-        private IEnumerator LoadFastScene(string newGameName)
+        private IEnumerator LoadFastScene()
         {
             Fade fader = FindObjectOfType<Fade>();
             yield return fader.FadeOut(fadeOutTime);
