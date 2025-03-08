@@ -20,7 +20,7 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   suspicionTime: 3
   agroCooldownTime: 3
-  shoutDistance: 2
+  shoutDistance: 4
   fleeHealthThreshold: 0.3
   fleeDistance: 10
   fleeTime: 3

@@ -22,6 +22,7 @@ namespace RPG.Stats
         public void RestoreState(object state)
         {
             experiencePoints = (float)state;
+            GetComponent<BaseStats>()?.UpdatingLevel();
         }
 
         public float GetExperiencePointsPoints()
