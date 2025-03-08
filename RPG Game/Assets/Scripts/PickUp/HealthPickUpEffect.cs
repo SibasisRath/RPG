@@ -15,7 +15,7 @@ namespace RPG.PickUp
             if (health != null)
             {
                 //print("health up.");
-                health.AdditionalHealth(healthAmount);
+                health.Heal(healthAmount);
             }
         }
     }

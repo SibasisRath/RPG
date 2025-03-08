@@ -1,144 +1,100 @@
 using RPG.PickUp;
 using RPG.Movement;
 using UnityEngine;
-using RPG.Core;
 using RPG.Attributes;
+using RPG.FSM;
+using RPG.Saving;
 
 namespace RPG.Control
 {
-    public class AIController : MonoBehaviour
+    public class AIController : MonoBehaviour, ISaveable
     {
-        [SerializeField] private float chaseDistance = 5f;
-        [SerializeField] private float suspicionTime = 3f;
-        [SerializeField] PatrolPath patrolPath;
-        [SerializeField] float waypointTolerance = 1.2f;
-        [SerializeField] float waypointDwellTime = 3f;
-        [SerializeField] float agroCooldownTime = 5f;
+        [SerializeField] protected AIConfig aiConfig;
+        [SerializeField] private PatrolPath patrolPath;
         [SerializeField] private Fighter fighter;
         [SerializeField] private Health health;
         [SerializeField] private Mover mover;
-        [Range(0, 1)]
-        [SerializeField] float patrolSpeedFraction = 0.2f;
-        float timeSinceAggrevated = Mathf.Infinity;
-        private GameObject player; //game service can help here.
-
-        private Vector3 guardPosition;
+        protected GameObject player;
+        private float timeSinceAggrevated = Mathf.Infinity;
         private float timeSinceLastSawPlayer = Mathf.Infinity;
-        private int currentWaypointIndex = 0;
         private float timeSinceArrivedAtWaypoint = Mathf.Infinity;
-        [SerializeField] float shoutDistance = 5f;
-        private void Awake()
-        {
-            player = GameObject.FindWithTag("Player");            
-        }
-        private void Start()
-        {
-            guardPosition = transform.position;
-        }
+        protected EnemyStateMachine stateMachine;
 
-        private void Update()
-        {
-            if (health.IsDead()) return;
-
-            if (IsAggrevated() && fighter.CanAttack(player))
-            {
-                AttackBehaviour();
-            }
-            else if (timeSinceLastSawPlayer < suspicionTime)
-            {
-                SuspicionBehaviour();
-            }
-            else
-            {
-                PatrolBehaviour();
-            }
-
-            UpdateTimers();
-        }
-
-        public void Aggrevate()
-        {
-            timeSinceAggrevated = 0;
-        }
-
-        private void PatrolBehaviour()
-        {
-            Vector3 nextPosition = guardPosition;
-
-            if (patrolPath != null)
-            {
-                if (AtWaypoint())
-                {
-                    timeSinceArrivedAtWaypoint = 0;
-                    CycleWaypoint();
-                }
-                nextPosition = GetCurrentWaypoint();
-            }
-
-            if (timeSinceArrivedAtWaypoint > waypointDwellTime)
-            {
-                mover.StartMoveAction(nextPosition, patrolSpeedFraction);
-            }
-        }
+        public float TimeSinceAggrevated { get => timeSinceAggrevated; set => timeSinceAggrevated = value; }
+        public float TimeSinceLastSawPlayer { get => timeSinceLastSawPlayer; set => timeSinceLastSawPlayer = value; }
+        public float TimeSinceArrivedAtWaypoint { get => timeSinceArrivedAtWaypoint; set => timeSinceArrivedAtWaypoint = value; }
 
         private void UpdateTimers()
         {
-            timeSinceLastSawPlayer += Time.deltaTime;
-            timeSinceArrivedAtWaypoint += Time.deltaTime;
-            timeSinceAggrevated += Time.deltaTime;
+            TimeSinceLastSawPlayer += Time.deltaTime;
+            TimeSinceArrivedAtWaypoint += Time.deltaTime;
+            TimeSinceAggrevated += Time.deltaTime;
         }
 
-        private bool AtWaypoint()
+        protected virtual void Awake()
         {
-            float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
-            return distanceToWaypoint < waypointTolerance;
+            player = GameObject.FindWithTag("Player");
+            stateMachine = new EnemyStateMachine(this);
         }
 
-        private void CycleWaypoint()
+        protected virtual void Update()
         {
-            currentWaypointIndex = patrolPath.GetNextIndex(currentWaypointIndex);
+            stateMachine.Update();
+            UpdateTimers();
         }
+        public bool IsAggrevated()
+        {
+           /* print("Distance between player and enemy = " + Vector3.Distance(player.transform.position, transform.position));
+            print("enemy chase Distance = " + aiConfig.chaseDistance);
+            print("Time Sience aggr = " + TimeSinceAggrevated);
+            print("aggro cool down time = " + aiConfig.agroCooldownTime);*/
+            return Vector3.Distance(player.transform.position, transform.position) < aiConfig.chaseDistance || TimeSinceAggrevated < aiConfig.agroCooldownTime;
+        }
+        public void Aggrevate() => TimeSinceAggrevated = 0;
 
-        private Vector3 GetCurrentWaypoint()
-        {
-            //print("getting next way point");
-            return patrolPath.GetWaypoint(currentWaypointIndex);
-        }
 
-        private void SuspicionBehaviour()
-        {
-            GetComponent<ActionScheduler>().CancelCurrentAction();
-        }
+        public Health GetTarget() => player.GetComponent<Health>();
+        public float GetSuspicionTime() => aiConfig.suspicionTime;
+        public float GetChaseDistance() => aiConfig.chaseDistance;
+        public bool ShouldFlee() => health.GetFraction() < aiConfig.fleeHealthThreshold;
+        public void Recover() => stateMachine.ChangeState(StateEnum.PATROLLING);
+        public Mover GetMover() => mover;
+        public Fighter GetFighter() => fighter;
+        public Health GetHealth() => health;
+        public PatrolPath GetPatrolPath() => patrolPath;
+        public AIConfig GetAIConfig() => aiConfig;
 
-        private void AttackBehaviour()
+        public object CaptureState()
         {
-            timeSinceLastSawPlayer = 0;
-            fighter.StartAttackAction(player);
-            AggrevateNearbyEnemies();
-        }
-        private void AggrevateNearbyEnemies()
-        {
-            RaycastHit[] hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
-            foreach (RaycastHit hit in hits)
+            return new SaveData
             {
-                AIController ai = hit.collider.GetComponent<AIController>();
-                if (ai == null) continue;
+                savedState = stateMachine.GetCurrentState(),
+                position = new SerializableVector3(transform.position),
+                isDead = health.IsDead()
+            };
+        }
 
-                ai.Aggrevate();
+        public void RestoreState(object state)
+        {
+            SaveData saveData = (SaveData)state;
+            transform.position = saveData.position.ToVector();
+            if (saveData.isDead)
+            {
+                health.TakeDamage(gameObject, health.GetHealthPoints()); // Kill enemy instantly
+                stateMachine.ChangeState(StateEnum.IDLE);
+            }
+            else
+            {
+                stateMachine.ChangeState(saveData.savedState);
             }
         }
 
-        private bool IsAggrevated()
+        [System.Serializable]
+        struct SaveData
         {
-            float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-            return distanceToPlayer < chaseDistance || timeSinceAggrevated < agroCooldownTime;
-        }
-
-        // Called by Unity
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, chaseDistance);
+            public StateEnum savedState;
+            public SerializableVector3 position;
+            public bool isDead;
         }
     }
 }

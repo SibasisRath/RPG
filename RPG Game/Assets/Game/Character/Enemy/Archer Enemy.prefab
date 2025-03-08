@@ -15,6 +15,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bfbe2e8b331e2cc42be1591f949c0e41, type: 2}
     - target: {fileID: 3911807737462545188, guid: 3759533d3b897ea46b960c1c6d2895f8,
         type: 3}
+      propertyPath: aiConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 520793f14b428db44b5b17e3dd53c5ba,
+        type: 2}
+    - target: {fileID: 3911807737462545188, guid: 3759533d3b897ea46b960c1c6d2895f8,
+        type: 3}
       propertyPath: chaseDistance
       value: 15
       objectReference: {fileID: 0}

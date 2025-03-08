@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RPG.Events
 {
-    public class EventService : MonoBehaviour
+    public class EventService
     {
         public EventController<bool> OnCutSceneStarted { get; private set; }
         public EventController<bool> OnCutSceneEnded { get; private set; }

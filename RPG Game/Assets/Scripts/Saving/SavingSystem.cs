@@ -25,6 +25,8 @@ namespace RPG.Saving
                 buildIndex = (int)state["lastSceneBuildIndex"];
             }
             yield return SceneManager.LoadSceneAsync(buildIndex);
+           //
+            yield return new WaitForEndOfFrame();
             RestoreState(state);
         }
 
@@ -70,6 +72,12 @@ namespace RPG.Saving
             }
         }
 
+        public bool SaveFileExists(string saveFileName)
+        {
+            string path = GetPathFromSaveFile(saveFileName);
+            return File.Exists (path);
+        }
+
         private void CaptureState(Dictionary<string, object> state)
         {
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
@@ -88,6 +96,16 @@ namespace RPG.Saving
                 if (state.ContainsKey(id))
                 {
                     saveable.RestoreState(state[id]);
+                }
+            }
+        }
+        public IEnumerable<string> ListSaves()
+        {
+            foreach (string path in Directory.EnumerateFiles(Application.persistentDataPath))
+            {
+                if (Path.GetExtension(path) == ".sav")
+                {
+                    yield return Path.GetFileNameWithoutExtension(path);
                 }
             }
         }

@@ -62,6 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 581596336082260216}
     - target: {fileID: 5973952731588749039, guid: 21c61e3cd1b4dde4388c211fde077c2b,
         type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 5338367593195708215}
+    - target: {fileID: 5973952731588749039, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
       propertyPath: weapon
       value: 
       objectReference: {fileID: 11400000, guid: cd8e5a662eece80469ac92dd9d5448bb,
@@ -198,6 +203,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8955244914878749195}
+    - targetCorrespondingSourceObject: {fileID: 6135079261118855680, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7817621362779747410}
   m_SourcePrefab: {fileID: 100100000, guid: 21c61e3cd1b4dde4388c211fde077c2b, type: 3}
 --- !u!114 &581596336082260216 stripped
 MonoBehaviour:
@@ -229,6 +238,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 380961183287206090}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5338367593195708215 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -3504711836456386563, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 380961183287206090}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795389694184331978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 257a7fb28554f5a4eaf96885c5d48e3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5795389694184331978 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6135079261118855680, guid: 21c61e3cd1b4dde4388c211fde077c2b,
@@ -250,7 +271,8 @@ MonoBehaviour:
   mover: {fileID: 581596336082260216}
   fighter: {fileID: 6318212135035438629}
   health: {fileID: 6749363109565018933}
-  eventService: {fileID: 0}
+  baseStat: {fileID: 5338367593195708215}
+  exp: {fileID: 8955244914878749195}
   cursorMappings:
   - type: 0
     texture: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621, type: 3}
@@ -282,7 +304,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   experiencePoints: 0
-  eventService: {fileID: 0}
+--- !u!114 &7817621362779747410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795389694184331978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ad708e382dde6418a565a62997f440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnLocation: {fileID: 0}
+  respawnDelay: 3
+  fadeTime: 0.2
+  healthRegenPercentage: 20
 --- !u!114 &6318212135035438629 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5973952731588749039, guid: 21c61e3cd1b4dde4388c211fde077c2b,

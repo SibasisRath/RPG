@@ -12,7 +12,7 @@ namespace RPG.Stats
         [SerializeField] private int startingLevel = 1;
         [SerializeField] private CharacterEnum characterType;
         [SerializeField] Progression progression = null;
-        [SerializeField] private EventService eventService = null;
+        private EventService eventService;
         [SerializeField] GameObject levelUpParticleEffect = null;
         [SerializeField] bool shouldUseModifiers = false;
 
@@ -21,15 +21,29 @@ namespace RPG.Stats
         private void Start()
         {
             currentLevel = CalculateLevel();
+           
+        }
+        public void Init(EventService eventService)
+        {
+            this.eventService = eventService;
             SubscribeToEvents();
         }
-
         private void SubscribeToEvents()
         {
+            if (eventService == null) 
+            {
+                if (this.gameObject.CompareTag("Player"))
+                {
+                    print("no eventservice.");
+                }
+               
+                return;
+            }
             eventService.OnGainingExperience.AddListener(UpdatingLevel);
         }
         private void UnsubscribeToEvents()
         {
+            if (eventService == null) { return; }
             eventService.OnGainingExperience.RemoveListener(UpdatingLevel);
         }
         private void UpdatingLevel()
@@ -126,5 +140,7 @@ namespace RPG.Stats
         {
             UnsubscribeToEvents();
         }
+
+     
     }
 }
