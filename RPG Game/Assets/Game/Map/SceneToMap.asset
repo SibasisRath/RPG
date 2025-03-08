@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad42947d161c58a4c9314106d9133645, type: 3}
+  m_Name: SceneToMap
+  m_EditorClassIdentifier: 
+  mapStructList:
+  - sceneIndex: 0
+    mapView: {fileID: 1662274309478216698, guid: 0f12650c5032f3b4ca80c2f5326cf0c1,
+      type: 3}
+  - sceneIndex: 1
+    mapView: {fileID: 3757649579135875011, guid: e52c2c904c6f36a4492bcd989d259dd1,
+      type: 3}

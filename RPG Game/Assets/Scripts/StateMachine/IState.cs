@@ -1,8 +1,9 @@
-public interface IState 
+namespace RPG.FSM
 {
-    void Enter();
-    void HandleInput();
-    void UpdateLogic();
-    void UpdatePhysics();
-    void Exit();
+    public interface IState
+    {
+        void OnStateEnter();
+        void Update();
+        void OnStateExit();
+    }
 }

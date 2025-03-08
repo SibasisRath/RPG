@@ -1,5 +1,6 @@
 using RPG.Events;
 using RPG.Saving;
+using System;
 using UnityEngine;
 
 namespace RPG.Stats
@@ -7,10 +8,11 @@ namespace RPG.Stats
     public class Experience : MonoBehaviour, ISaveable
     {
         [SerializeField] private float experiencePoints = 0;
-        [SerializeField] private EventService eventService = null;
+        private EventService eventService;
         public void GainExperience(float experience)
         {
             experiencePoints += experience;
+            if (eventService == null) { print("no event"); }
             eventService.OnGainingExperience.InvokeEvent();
         }
         public object CaptureState()
@@ -25,6 +27,11 @@ namespace RPG.Stats
         public float GetExperiencePointsPoints()
         {
             return experiencePoints;
+        }
+
+        public void Init(EventService eventService)
+        {
+            this.eventService = eventService;
         }
     }
 }

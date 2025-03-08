@@ -4879,9 +4879,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee9bfe7fb3d93f42a1445849903de48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: fd6ee636929104d44951fb7acee960fc, type: 2}
-  weaponRespawnTime: 1
-  weaponPickUpCollider: {fileID: 5003438877394367276}
+  pickUpRespawnTime: 1
+  pickUpCollider: {fileID: 5003438877394367276}
+  pickableEffect: {fileID: 0}
 --- !u!135 &5003438877394367276
 SphereCollider:
   m_ObjectHideFlags: 0

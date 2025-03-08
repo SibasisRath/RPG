@@ -130,8 +130,68 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
         type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
       propertyPath: damageTextDisplayEvent.m_PersistentCalls.m_Calls.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 481160515590963151}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2205150251131280383}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 3911807737462545188}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Spawn
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Aggrevate
       objectReference: {fileID: 0}
     - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
         type: 3}
@@ -185,6 +245,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
         type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RPG.UI.DamageTextSpawner, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.AudioSource, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: RPG.Control.AIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
       propertyPath: damageTextDisplayEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: RPG.UI.DamageTextSpawner, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -202,6 +277,21 @@ PrefabInstance:
         type: 3}
       propertyPath: damageTextDisplayEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
+        type: 3}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: -2818127670591335425, guid: 21c61e3cd1b4dde4388c211fde077c2b,
         type: 3}
@@ -434,16 +524,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37142488ebcacb488fe4b7af1e8a37b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseDistance: 5
-  suspicionTime: 5
+  aiConfig: {fileID: 11400000, guid: 71dde53148b9feb478e4be7f9be21db1, type: 2}
   patrolPath: {fileID: 0}
-  waypointTolerance: 1.2
-  waypointDwellTime: 3
-  agroCooldownTime: 5
   fighter: {fileID: 6961797389076707254}
   health: {fileID: 7681175433711092390}
   mover: {fileID: 4549118757882765675}
-  patrolSpeedFraction: 0.2
 --- !u!114 &5418237404087974231
 MonoBehaviour:
   m_ObjectHideFlags: 0

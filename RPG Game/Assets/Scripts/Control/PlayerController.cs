@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEngine.AI;
 using RPG.Attributes;
+using RPG.Stats;
 
 namespace RPG.Control
 {
@@ -14,7 +15,11 @@ namespace RPG.Control
         [SerializeField] private Mover mover;
         [SerializeField] private Fighter fighter;
         [SerializeField] private Health health;
-        [SerializeField] private EventService eventService;
+        [SerializeField] private BaseStats baseStat;
+        [SerializeField] private Experience exp;
+
+        private EventService eventService;
+
         [System.Serializable]
         struct CursorMapping
         {
@@ -27,7 +32,6 @@ namespace RPG.Control
 
 
         private Camera playerCamera;
-        private bool hasHit;
 
 
         private bool hasControl;
@@ -36,23 +40,33 @@ namespace RPG.Control
         [SerializeField] float raycastRadius = 1f;
 
 
-        private void SetControl(bool control) => hasControl = control; 
-        private void SubscribingToEvents()
-        {
-            eventService.OnCutSceneStarted.AddListener(SetControl);
-            eventService.OnCutSceneEnded.AddListener(SetControl);
-        }
-        private void UnsubscribingToEvents()
-        {
-            eventService.OnCutSceneStarted.RemoveListener(SetControl);
-            eventService.OnCutSceneEnded.RemoveListener(SetControl);
-        }
+        private void SetControl(bool control) => hasControl = control;
+
 
         private void Start()
         {
             hasControl = true;
             playerCamera = Camera.main;
+        }
+
+        public void Init(EventService eventService)
+        {
+            this.eventService = eventService;
+            health.Init(eventService);
+            baseStat.Init(eventService);
+            exp.Init(eventService);
             SubscribingToEvents();
+        }
+
+        private void SubscribingToEvents()
+        {
+           /* eventService.OnCutSceneStarted.AddListener(SetControl);
+            eventService.OnCutSceneEnded.AddListener(SetControl);*/
+        }
+        private void UnsubscribingToEvents()
+        {
+            /*eventService.OnCutSceneStarted.RemoveListener(SetControl);
+            eventService.OnCutSceneEnded.RemoveListener(SetControl);*/
         }
 
         void Update()
@@ -111,8 +125,7 @@ namespace RPG.Control
 
         private bool InteractWithMovement()
         {
-            Vector3 target;
-            bool hasHit = RaycastNavMesh(out target);
+            bool hasHit = RaycastNavMesh(out Vector3 target);
             if (hasHit)
             {
                 if (!GetComponent<Mover>().CanMoveTo(target)) return false;
@@ -131,12 +144,10 @@ namespace RPG.Control
         private bool RaycastNavMesh(out Vector3 target)
         {
             target = new Vector3();
-            RaycastHit hit;
-            bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
+            bool hasHit = Physics.Raycast(GetMouseRay(), out RaycastHit hit);
             if (!hasHit) return false;
-            NavMeshHit navMeshHit;
             bool hasCastToNavMesh = NavMesh.SamplePosition(
-                hit.point, out navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);
+                hit.point, out NavMeshHit navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);
             if (!hasCastToNavMesh) return false;
             target = navMeshHit.position;            
             return true;

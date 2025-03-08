@@ -12,18 +12,18 @@ namespace RPG.Attributes
         private float healthPoints = -1f;
         [SerializeField] private Animator animator;
         [SerializeField] private float regenerationPercentage = 70;
-        [SerializeField] private EventService eventService = null;
+        private EventService eventService;
         [SerializeField] private GameObject healthGainEffect; // instead of instantiating keep it disable and enable it when reqyuired.
         [SerializeField] private BaseStats baseStats = null;
-        private bool isDead = false;
+        private bool wasDeadLastFrame = false;
 
         [System.Serializable]
         public class TakedamageEvent : UnityEvent<float>
         { }
 
-        [SerializeField] private UnityEvent onDie = null;
+        public UnityEvent onDie = null;
 
-        [SerializeField] private TakedamageEvent damageTextDisplayEvent = null;
+        [SerializeField] private TakedamageEvent takeDamageEvent = null;
 
         // start can be called sometimes after we have restored the save state.
         private void Start()
@@ -66,7 +66,7 @@ namespace RPG.Attributes
 
         public bool IsDead()
         {
-            return isDead;
+            return healthPoints <= 0;
         }
         public float GetHealthPoints()
         {
@@ -79,41 +79,40 @@ namespace RPG.Attributes
         public void RestoreState(object state)
         {
             healthPoints = (float)state;
-            if (healthPoints <= 0)
-            {
-                Death();
-            }
+            UpdateState();
         }
 
         public void TakeDamage(GameObject instigator, float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
-            damageTextDisplayEvent.Invoke(damage);
-            if (healthPoints == 0)
+            takeDamageEvent.Invoke(damage);
+            if (IsDead())
             {
                 onDie.Invoke();
-                Death();
                 AwardExperience(instigator);
             }
+            else
+            {
+                takeDamageEvent.Invoke(damage);
+            }
+            UpdateState();
         }
 
-        public void AdditionalHealth(float healingAmount)
+        public void Heal(float healingAmount)
         {
             healthPoints = Mathf.Min(healthPoints + healingAmount, GetMaxHealthPoints());
+            UpdateState();
         }
 
-        private void Death()
-        {
-            if (isDead) return;
-            isDead = true;
-            animator.SetTrigger("Die");
-            GetComponent<ActionScheduler>().CancelCurrentAction();
-        }
+     
 
         private void AwardExperience(GameObject instigator)
         {
-            if (!instigator.TryGetComponent<Experience>(out var experience)) return;
-            experience.GainExperience(baseStats.GetStat(Stat.EXPERIENCE_REWARD));
+            instigator.TryGetComponent<Experience>(out Experience experience);
+            if (experience == null) return;
+            float exp = GetComponent<BaseStats>().GetStat(Stat.EXPERIENCE_REWARD);
+            experience.GainExperience(exp);
+            print("experience reward. " + GetComponent<BaseStats>().GetStat(Stat.EXPERIENCE_REWARD));
         }
         private void OnDisable()
         {
@@ -124,10 +123,31 @@ namespace RPG.Attributes
         {
             return healthPoints / GetComponent<BaseStats>().GetStat(Stat.HEALTH);
         }
+        private void UpdateState()
+        {
+            Animator animator = GetComponent<Animator>();
+            if (!wasDeadLastFrame && IsDead())
+            {
+                animator.SetTrigger("Die");
+                GetComponent<ActionScheduler>().CancelCurrentAction();
+            }
+
+            if (wasDeadLastFrame && !IsDead())
+            {
+                animator.Rebind();
+            }
+
+            wasDeadLastFrame = IsDead();
+        }
+
         public float GetPercentage()
         {
             return 100 * GetFraction();
         }
 
+        public void Init(EventService eventService)
+        {
+            this.eventService = eventService;
+        }
     }
 }

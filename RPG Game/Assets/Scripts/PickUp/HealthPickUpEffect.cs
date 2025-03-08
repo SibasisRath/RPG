@@ -14,8 +14,8 @@ namespace RPG.PickUp
             Health health = player.GetComponent<Health>();
             if (health != null)
             {
-                print("health up.");
-                health.AdditionalHealth(healthAmount);
+                //print("health up.");
+                health.Heal(healthAmount);
             }
         }
     }

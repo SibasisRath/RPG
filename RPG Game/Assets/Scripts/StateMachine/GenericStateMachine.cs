@@ -1,33 +1,42 @@
-using System.Collections;
+using RPG.Control;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class GenericStateMachine<T> where T : MonoBehaviour
+namespace RPG.FSM
 {
-    private IState currentState;
-    protected T owner;
-    protected Dictionary<States, IState> States = new Dictionary<States, IState>();
-
-    public GenericStateMachine(T owner)
+    public class GenericStateMachine<T> where T : AIController
     {
-        this.owner = owner;
-    }
+        protected T Owner;
+        protected IState currentState;
+        protected Dictionary<StateEnum, IState> States = new();
 
-    public void SetState(IState newState)
-    {
-        currentState?.Exit();
-        currentState = newState;
-        currentState?.Enter();
-    }
+        public GenericStateMachine(T owner)
+        {
+            Owner = owner;
+            InitializeStates();
+        }
+        public void Update() => currentState?.Update();
 
-    public void Update()
-    {
-        currentState?.HandleInput();
-        currentState?.UpdateLogic();
-    }
+        protected virtual void InitializeStates()
+        {
+            // Override this method in derived classes to set up specific states
+        }
 
-    public void FixedUpdate()
-    {
-        currentState?.UpdatePhysics();
+        protected void ChangeState(IState newState)
+        {
+            currentState?.OnStateExit();
+            currentState = newState;
+            currentState?.OnStateEnter();
+        }
+
+        public void ChangeState(StateEnum newState) => ChangeState(States[newState]);
+
+        public StateEnum GetCurrentState()
+        {
+            foreach (var pair in States)
+            {
+                if (pair.Value == currentState) return pair.Key;
+            }
+            return StateEnum.IDLE;
+        }
     }
 }

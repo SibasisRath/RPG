@@ -1,6 +1,5 @@
 using RPG.Control;
 using System.Collections;
-using System.Numerics;
 using UnityEngine;
 
 namespace RPG.PickUp
@@ -19,6 +18,8 @@ namespace RPG.PickUp
             }
             return true;
         }
+
+        
 
         private void OnTriggerEnter(Collider other)
         {

@@ -1,4 +1,5 @@
 using RPG.Attributes;
+using RPG.Control;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Saving;
@@ -18,7 +19,6 @@ namespace RPG.PickUp
         [SerializeField] private Transform rightHandTransform = null;
         [SerializeField] private Transform leftHandTransform = null;
         [SerializeField] private WeaponConfig defaultWeapon = null;
-        //[SerializeField] private string defaultWeaponName = "Unarmed";
         private WeaponConfig currentWeaponConfig = null;
         private Weapon currentWeapon;
 
@@ -103,7 +103,6 @@ namespace RPG.PickUp
                 TriggerAttack();
                 timeSinceLastAttack = 0;
             }
-           
         }
 
         //animation event
